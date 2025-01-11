@@ -6,18 +6,13 @@ const router = express.Router();
 
 router.get('/stats', getStats);
 router.get('/deviation', getDeviation);
-router.get('/debug', async (req, res) => {
-    try {
-      const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
-      res.json({
-        dbStatus,
-        env: process.env.NODE_ENV,
-        hasMongoUri: !!process.env.MONGODB_URI
-      });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+router.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    dbStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
   });
+});
 
 module.exports = router;
 

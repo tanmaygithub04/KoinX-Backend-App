@@ -12,15 +12,16 @@ app.use('/api', routes);
 
 // Always connect to database
 connectDB();
-startFetchCryptoJob();
 
-
-// Only start the server if not being deployed to Vercel
+// Only run cron job in development
 if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
+  startFetchCryptoJob();
 }
+
+// Always start the server (needed for Render)
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
