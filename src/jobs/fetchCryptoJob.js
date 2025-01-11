@@ -3,6 +3,7 @@ const Crypto = require('../models/crypto');
 const fetchCryptoData = require('../services/fetchCryptoData');
 
 const startFetchCryptoJob = () => {
+  console.log('Starting fetch crypto job...');
   cron.schedule('0 */2 * * *', async () => {
     console.log('Fetching crypto data...');
     try {
