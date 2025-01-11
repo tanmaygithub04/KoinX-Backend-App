@@ -12,11 +12,7 @@ app.use('/api', routes);
 
 // Always connect to database
 connectDB();
-
-// Only run cron job in development
-if (process.env.NODE_ENV !== 'production') {
-  startFetchCryptoJob();
-}
+startFetchCryptoJob();
 
 // Always start the server (needed for Render)
 app.listen(PORT, '0.0.0.0', () => {
